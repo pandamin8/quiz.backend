@@ -2,11 +2,13 @@ import * as dotenv from 'dotenv'
 dotenv.config({ path: process.cwd() + '/.env' })
 
 import express from 'express'
+import swaggerUi from 'swagger-ui-express'
 
 import http from 'http'
 import fs from 'fs'
 
 import { listFiles } from './src/utilities'
+import { swaggerDocument } from './documentation/swagger'
 
 const app = express()
 const server = http.createServer(app)
@@ -31,4 +33,10 @@ const loadRouters = async () => {
 
 loadRouters()
 
-server.listen(process.env.PORT)
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
+
+const port = process.env.PORT
+
+server.listen(port, () => {
+    console.log('Server is running on port ' + port)
+})
