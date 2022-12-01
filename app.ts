@@ -21,7 +21,7 @@ const loadRouters = async () => {
         try {
             if (!file.path.endsWith('.map')) {
                 const router = require(file.path)
-                app.use('/api', router.default)
+                app.use('/api/v1', router.default)
             }
 
         } catch (e) {
@@ -36,6 +36,10 @@ loadRouters()
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
 const port = process.env.PORT
+
+import scan from './src/scanApis'
+
+scan()
 
 server.listen(port, () => {
     console.log('Server is running on port ' + port)
