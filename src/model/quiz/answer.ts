@@ -4,8 +4,8 @@ import mainDB from '../../db/mongoose'
 const Schema = mongoose.Schema
 
 export interface IAnswer extends Document {
-    question: Types.ObjectId,
-    choice: Types.ObjectId
+    QuestionId: Types.ObjectId,
+    ChoiceId: Types.ObjectId
 }
 
 interface AnswerModel extends Model<IAnswer> {
@@ -13,11 +13,11 @@ interface AnswerModel extends Model<IAnswer> {
 }
 
 const answerSchema = new mongoose.Schema<IAnswer> ({
-    question: {
+    QuestionId: {
         type: Schema.Types.ObjectId,
         ref: 'Question'
     },
-    choice: {
+    ChoiceId: {
         type: Schema.Types.ObjectId,
         ref: 'Choice'
     }
