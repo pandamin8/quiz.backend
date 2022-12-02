@@ -12,6 +12,7 @@ import { swaggerDocument } from './documentation/swagger'
 
 const app = express()
 const server = http.createServer(app)
+app.use(express.json())
 
 // importing all router files automatically
 const loadRouters = async () => {

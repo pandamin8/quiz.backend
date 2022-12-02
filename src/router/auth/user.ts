@@ -7,15 +7,14 @@ const router = express.Router()
 router.post('/user', async (req, res) => {
     try {
         const user = new User({
-            email: req.body.email,
+            username: req.body.username,
             password: req.body.password
-        })
+        })        
 
-        const token = user.generateAuthToken()
+        const token = await user.generateAuthToken()
         await user.save()
 
-        res.send({ user, token })
-
+        res.send({ user, token })        
     } catch(e) {
         if (e instanceof Error) res.status(400).send({ error: e.message })
     }    

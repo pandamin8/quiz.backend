@@ -19,7 +19,7 @@ export const swaggerDocument = {
 
     servers: [
         {
-            url: 'localhost:400/api/v1',
+            url: 'http://localhost:400/api/v1',
             description: 'local server'
         }
     ],
