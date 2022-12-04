@@ -27,22 +27,34 @@ const questionSchema = new mongoose.Schema<IQuestion> ({
 }, { timestamps: true })
 
 questionSchema.methods.setChoices = async function(titles: [String], answer: String) {
-    try {
-        const question = this        
-            
-        for (let i = 0; i < titles.length; i++) {
-            const title = titles[i]
-            const choice = await Choice.create({ title })
-            question.choices = question.choices.concat(choice._id)
+    return new Promise(async (resolve, reject) => {     
+        try {
+            const question = this        
 
-            if (title === answer)
-                await Answer.create({ QuestionId: question._id, ChoiceId: choice._id })                        
+            if (hasDuplicates(titles))
+                throw new Error('Cannot have duplicate choices')
+            if (!titles.includes(answer))
+                throw new Error('Answer must be among choices')
+
+            for (let i = 0; i < titles.length; i++) {
+                const title = titles[i]
+                const choice = await Choice.create({ title })
+                question.choices = question.choices.concat(choice._id)
+            
+                if (title === answer)
+                    await Answer.create({ QuestionId: question._id, ChoiceId: choice._id })                
+            }
+        
+            await question.save()
+        } catch (e) {
+            reject(e)
         }
 
-        await question.save()
-    } catch (e) {
-        console.log(e)
-    }
+    })
+}
+
+function hasDuplicates(array: [String]) {
+    return (new Set(array)).size !== array.length;
 }
 
 const Question = mainDB.model<IQuestion, QuestionModel>('Question', questionSchema)

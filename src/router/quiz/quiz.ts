@@ -16,9 +16,6 @@ router.post('/question', auth(1), async(req, res) => {
             description: req.body.description            
         })
 
-        if (hasDuplicates(req.body.choices))
-            res.status(400).send({ error: 'cannot have duplicate choices' })
-            
         await question.setChoices(req.body.choices, req.body.answer)
 
         await question.save()
@@ -28,9 +25,5 @@ router.post('/question', auth(1), async(req, res) => {
         if (e instanceof Error) res.status(400).send({ error: e.message })
     }
 })
-
-function hasDuplicates(array: [String]) {
-    return (new Set(array)).size !== array.length;
-}
 
 export default router
