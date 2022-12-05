@@ -33,7 +33,7 @@ userSchema.methods.generateAuthToken = async function () {
     try {
         if (!process.env.JWT_SECRET) throw new Error('no jwt secret found')
         const user = this
-        const token = jwt.sign({ _id: user.id.toString() }, process.env.JWT_SECRET)
+        const token = jwt.sign({ id: user.id.toString() }, process.env.JWT_SECRET)
         user.tokens = user.tokens.concat(token)
         await user.save()
         return token

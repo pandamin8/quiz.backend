@@ -38,7 +38,7 @@ questionSchema.methods.setChoices = async function(titles: [String], answer: Str
 
             for (let i = 0; i < titles.length; i++) {
                 const title = titles[i]
-                const choice = await Choice.create({ title })
+                const choice = await Choice.create({ title, QuestionId: question._id })
                 question.choices = question.choices.concat(choice._id)
             
                 if (title === answer)
@@ -52,6 +52,17 @@ questionSchema.methods.setChoices = async function(titles: [String], answer: Str
 
     })
 }
+
+// questionSchema.methods.answer = async function (AnswerId: Type.ObjectId) {
+//     return new Promise(async (resolve, reject) => {
+//         try {
+//             const question = this
+//             const userAnswer = new UserAnswer()
+//         } catch (e) {
+//             reject(e)
+//         }
+//     })
+// }
 
 function hasDuplicates(array: [String]) {
     return (new Set(array)).size !== array.length;
