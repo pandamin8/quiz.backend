@@ -13,7 +13,7 @@ export interface IAdmin extends Document{
     lastIP: string,
     tokens: string[],
     roles: Types.ObjectId[],
-    generateToken(): void,
+    generateAuthToken(): void,
     addRole(role: IRole): void,
     getRoles(): IRole[]
 }
@@ -85,7 +85,7 @@ adminSchema.methods.toJSON = function () {
     return modelObject
 }
 
-adminSchema.methods.generateToken = async function () {
+adminSchema.methods.generateAuthToken = async function () {
     try {
         if(!process.env.JWT_SECRET) throw new Error('no jwt secret found')
         const admin = this

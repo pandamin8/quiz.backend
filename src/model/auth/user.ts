@@ -9,7 +9,7 @@ const Schema = mongoose.Schema
 export interface IUser extends Document {
     username: string,
     password: string,
-    tokens: string[]
+    tokens: string[],
     generateAuthToken(): void
 }
 

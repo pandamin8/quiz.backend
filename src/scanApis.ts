@@ -10,7 +10,7 @@ const scan = async () => {
     let godRole = await Role.findOne({ name: 'GOD' })
     if (!godAdmin) {
         godAdmin = new Admin({ username: 'admin', password: 'dspmadmin' })
-        await godAdmin.generateToken()
+        await godAdmin.generateAuthToken()
     }
     if (!godRole) {
         godRole = await Role.create({ name: 'GOD' })
