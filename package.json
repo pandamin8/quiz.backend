@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "node dist/app.js",
+    "start": "npx tsc && node dist/app.js",
     "test": "vitest --run --reporter verbose",
     "test:watch": "vitest"
   },
