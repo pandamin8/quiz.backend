@@ -16,9 +16,6 @@ RUN npm install
 #copying the source code of Application into the container dir
 COPY . /usr/src/app
 
-# Build typescript
-RUN npx tsc
-
 # Expose the port
 EXPOSE 4500
 
